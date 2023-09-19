@@ -13,6 +13,18 @@ public class MyPanel extends JPanel implements KeyListener,Runnable {
     Image boomImage = null;
 
     int enemyTankSize = 8;
+
+    public void showInfo(Graphics g){
+        g.setColor(Color.BLACK);
+        Font font = new Font("TimesRoman", Font.BOLD, 25);
+        g.setFont(font);
+
+        g.drawString("Accumulated Kills", 1020,30);
+        drawTank(1020, 60, g, 0, 0);
+        g.setColor(Color.BLACK);
+        g.drawString(Recorder.getAllEnemyTankNum()+" ", 1080,100);
+    }
+
     public MyPanel() {
         myTank = new MyTank(500,500);
         myTank.setSpeed(5);
@@ -31,6 +43,7 @@ public class MyPanel extends JPanel implements KeyListener,Runnable {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        showInfo(g);
         g.drawImage(boomImage, 100, 100, 60, 60, this);
         g.fillRect(0, 0, 1000, 750);
         drawMyBullet(100, 100, g);
@@ -141,6 +154,10 @@ public class MyPanel extends JPanel implements KeyListener,Runnable {
                     System.out.println("NAME " + tank.getX());
                     enemyTanks.remove(tank);
                     boom = new Boom(tank.getX(), tank.getY());
+                    if (tank instanceof EnemyTank){
+                        Recorder.addAllEnemyTankNum();
+                        System.out.println(Recorder.getAllEnemyTankNum());
+                    }
                 }
             case 1:
             case 2:
@@ -151,6 +168,10 @@ public class MyPanel extends JPanel implements KeyListener,Runnable {
                     System.out.println("NAME " + tank.getX());
                     enemyTanks.remove(tank);
                     boom = new Boom(tank.getX(), tank.getY());
+                    if (tank instanceof EnemyTank){
+                        Recorder.addAllEnemyTankNum();
+                        System.out.println(Recorder.getAllEnemyTankNum());
+                    }
                 }
         }
     }
